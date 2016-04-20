@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>single page</title>
+
+    <link href="./public/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="head" style="width: 100%;height:200px;background: gray;">
+        <div class="container">
+            <div class="row" style="margin-top: 100px;">
+                <div class="col-md-4"><a href="#/part1" class="btn btn-info">part one</a></div>
+                <div class="col-md-4"><a href="#/part2" class="btn btn-info">part two</a></div>
+                <div class="col-md-4"><a href="#/part3/1" class="btn btn-info">part three</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" style="margin-left: 40%;">
+        <h1>content</h1>
+    </div>
+
+    <script type="text/javascript" src="./public/libs/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="./public/libs/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="./public/libs/juicer/build/juicer-min.js"></script>
+    <script type="text/javascript" src="./public/libs/director/director.min.js"></script>
+
+    <script id="tp-part-one" type="text/template">
+        <h1>${say}</h1>
+        <h1>${name}</h1>
+    </script>
+
+    <script id="tp-part-two" type="text/template">
+        <h1>${say}</h1>
+        {@each names as name}
+        <h2>${name}</h2>
+        {@/each}
+    </script>
+
+    <script id="tp-part-three" type="text/template">
+        <h1>${say}</h1>
+        {@each names as name,index}
+            {@if index == man_id}
+                <h2>${name} the man_id is ${man_id}</h2>
+            {@else}
+                <h2>${name}</h2>
+            {@/if}
+        {@/each}
+    </script>
+
+    <script>
+        var routes = {
+            '/part1'         : part1,
+            '/part2'         : part2,
+            '/part3/:man_id' : part3
+        };
+        var router = Router(routes);
+        router.init();
+
+        function part1()
+        {
+            var data = {
+                name: 'Young',
+                say: 'hello'
+            };
+            var html = juicer($('#tp-part-one').html(),data);
+            $('#content').html(html);
+        }
+
+        function part2()
+        {
+            var data = {
+                say: 'hello',
+                names: ['Tony','Marry','Young']
+            };
+            var html = juicer($('#tp-part-two').html(),data);
+            $('#content').html(html);
+        }
+
+        function part3(man_id)
+        {
+            var data = {
+                say: 'hello',
+                names: ['Tony','Marry','Young'],
+                man_id: man_id
+            };
+            var html = juicer($('#tp-part-three').html(),data);
+            $('#content').html(html);
+        }
+    </script>
+
+</body>
+</html>

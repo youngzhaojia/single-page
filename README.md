@@ -1,2 +1,5 @@
 # single-page
-a single page template 
+### a single page template using Director and Juicer
+
+> #### Director :   https://github.com/flatiron/director
+> #### Juicer   :   https://github.com/PaulGuo/Juicer
